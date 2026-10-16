@@ -1,0 +1,107 @@
+
+import 'package:flutter/material.dart';
+import 'animated_container.dart';
+import 'animated_cross_fade.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MenuPage(),
+    );
+  }
+}
+
+class MenuPage extends StatelessWidget {
+  const MenuPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Restaurant Menu'),
+        backgroundColor: Colors.orange,
+      ),
+
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            FoodItem(
+              name: 'Zinger Burger',
+              price: 'Rs. 450',
+              image: 'res/images/burger.jpg',
+            ),
+
+            FoodItem(
+              name: 'Pizza',
+              price: 'Rs. 850',
+              image: 'res/images/pizza.jpg',
+            ),
+
+            FoodItem(
+              name: 'Chicken Biryani',
+              price: 'Rs. 350',
+              image: 'res/images/Chicken biryani.jpg',
+            ),
+
+            FoodItem(
+              name: 'French Fries',
+              price: 'Rs. 250',
+              image: 'res/images/French fries.jpg',
+            ),
+
+            FoodItem(
+              name: 'Chicken Karahi',
+              price: 'Rs. 1200',
+              image: 'res/images/Chicken karahi.jpg',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FoodItem extends StatelessWidget {
+  final String name;
+  final String price;
+  final String image;
+
+  const FoodItem({
+    super.key,
+    required this.name,
+    required this.price,
+    required this.image,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 15),
+
+        // First animation
+        AnimatedContainerWidget(
+          image: image,
+        ),
+
+        const SizedBox(height: 10),
+
+        // Second animation
+        AnimatedCrossFadeWidget(
+          name: name,
+          price: price,
+        ),
+
+        const Divider(),
+      ],
+    );
+  }
+}
