@@ -1,0 +1,149 @@
+
+import 'package:flutter/material.dart';
+
+class AnimatedContainerWidget extends StatefulWidget {
+  final String image;
+
+  const AnimatedContainerWidget({
+    super.key,
+    required this.image,
+  });
+
+  @override
+  State<AnimatedContainerWidget> createState() =>
+      _AnimatedContainerWidgetState();
+}
+
+class _AnimatedContainerWidgetState
+    extends State<AnimatedContainerWidget> {
+  double height = 130;
+  double width = 200;
+
+  void changeSize() {
+    setState(() {
+      if (width == 200) {
+        width = 280;
+        height = 180;
+      } else {
+        width = 200;
+        height = 130;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        AnimatedContainer(
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeInOut,
+          width: width,
+          height: height,
+          child: Image.asset(
+            widget.image,
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        IconButton(
+          onPressed: changeSize,
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+import 'package:flutter/material.dart';
+
+class AnimatedCrossFadeWidget extends StatefulWidget {
+  final String name;
+  final String price;
+
+  const AnimatedCrossFadeWidget({
+    super.key,
+    required this.name,
+    required this.price,
+  });
+
+  @override
+  State<AnimatedCrossFadeWidget> createState() =>
+      _AnimatedCrossFadeWidgetState();
+}
+
+class _AnimatedCrossFadeWidgetState
+    extends State<AnimatedCrossFadeWidget> {
+  bool showFirst = true;
+
+  void changeDetails() {
+    setState(() {
+      showFirst = !showFirst;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        AnimatedCrossFade(
+          duration: const Duration(seconds: 1),
+
+          crossFadeState: showFirst
+              ? CrossFadeState.showFirst
+              : CrossFadeState.showSecond,
+
+          firstChild: Column(
+            children: [
+              Text(
+                widget.name,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(widget.price),
+            ],
+          ),
+
+          secondChild: Container(
+            padding: const EdgeInsets.all(10),
+            color: Colors.orange.shade100,
+            child: Column(
+              children: [
+                Text(
+                  widget.name,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepOrange,
+                  ),
+                ),
+                Text(
+                  widget.price,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.green,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        ElevatedButton(
+          onPressed: changeDetails,
+          child: const Text('Change Details'),
+        ),
+      ],
+    );
+  }
+}
